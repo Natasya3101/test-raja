@@ -46,7 +46,7 @@
           <h5 class="fw-bold">{{ item.name }}</h5>
           <hr />
           <ul>
-          <li v-for="itm in item.items" :key="itm.id">{{ itm.itemName }}</li>
+          <li v-for="itm in item.items" :key="itm.id">{{ itm.name }}</li>
         </ul>
 
         </div>
@@ -141,7 +141,26 @@ const submitNewItem = async () => {
     alert('Terjadi kesalahan: ' + error.message)
   }
 }
+const addChecklist = async () => {
+  const token = localStorage.getItem('token')
+  if (!newChecklistName.value.trim()) return
+  try {
+    await fetch('http://94.74.86.174:8080/api/checklist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name: newChecklistName.value }),
+    })
 
+    newChecklistName.value = ''
+    showForm.value = false
+    await fetchChecklists()
+  } catch (e) {
+    alert('Gagal tambah checklist: ' + e.message)
+  }
+}
 const fetchChecklists = async () => {
   const token = localStorage.getItem('token')
   if (!token) {
