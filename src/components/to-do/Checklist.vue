@@ -211,7 +211,7 @@ const fetchChecklistItems = async (checklistId) => {
     })
     const result = await response.json()
 
-    console.log('Items untuk checklist', checklistId, result) // ⬅️ Tambahkan ini
+    console.log('Items untuk checklist', checklistId, result) 
 
     if (response.ok && Array.isArray(result.data)) {
       const checklist = checklists.value.find(c => c.id === checklistId)
